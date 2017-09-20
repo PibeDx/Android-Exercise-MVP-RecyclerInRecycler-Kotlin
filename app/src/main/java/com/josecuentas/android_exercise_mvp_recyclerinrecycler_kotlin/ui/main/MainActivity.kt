@@ -19,14 +19,14 @@ package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.main
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.TextView
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    val itemAdapter = ItemAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,16 @@ class MainActivity : AppCompatActivity() {
 
         rviContainer.layoutManager = LinearLayoutManager(this)
         rviContainer.setHasFixedSize(false)
-        rviContainer.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+        rviContainer.adapter = itemAdapter
+
+        val itemList = ArrayList<Item>()
+        (0..10).mapTo(itemList) { Item(it, emptyList()) }
+
+        itemAdapter.itemList = itemList
+        itemAdapter.notifyDataSetChanged()
+
+        /*object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             override fun getItemCount(): Int = 30
 
@@ -48,6 +57,6 @@ class MainActivity : AppCompatActivity() {
                 return object : RecyclerView.ViewHolder(view) {}
             }
 
-        }
+        }*/
     }
 }
