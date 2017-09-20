@@ -16,9 +16,13 @@
 
 package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.holder
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.SubItem
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.SubItemAdapter
+
 
 /**
  * Created by jcuentas on 20/09/17.
@@ -30,16 +34,19 @@ class ItemViewHolder : RecyclerView.ViewHolder {
         rviItem = itemView.findViewById(R.id.rviItem)
     }
 
-    fun setup() {
-        setupAdapter()
-        setupRecycler()
-    }
-
-    private fun setupAdapter() {
-
-    }
-
-    private fun setupRecycler() {
-
+    fun setSubItems(subItemList: List<SubItem>) {
+        if (rviItem.adapter == null) {
+            val subItemAdapter = SubItemAdapter()
+            subItemAdapter.subItemList = subItemList as ArrayList<SubItem>
+            val linearLayoutManager = LinearLayoutManager(rviItem.context)
+            linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            rviItem.layoutManager = linearLayoutManager
+            rviItem.setHasFixedSize(true)
+            rviItem.adapter = subItemAdapter
+        } else {
+            val subItemAdapter = rviItem.adapter as SubItemAdapter
+            subItemAdapter.subItemList = subItemList as ArrayList<SubItem>
+            subItemAdapter.notifyDataSetChanged()
+        }
     }
 }

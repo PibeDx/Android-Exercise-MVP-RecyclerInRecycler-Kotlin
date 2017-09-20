@@ -20,25 +20,23 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
-import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
-import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.holder.ItemViewHolder
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.SubItem
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.holder.SubItemViewHolder
 
 /**
  * Created by jcuentas on 20/09/17.
  */
-class ItemAdapter : RecyclerView.Adapter<ItemViewHolder>() {
+class SubItemAdapter: RecyclerView.Adapter<SubItemViewHolder>() {
 
-    var itemList = ArrayList<Item>()
+    var subItemList = ArrayList<SubItem>()
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = itemList.get(position)
-        holder.setSubItems(item.subItemList)
+    override fun onBindViewHolder(holder: SubItemViewHolder?, position: Int) {
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_item, parent, false)
-        return ItemViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubItemViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_sub_item, parent, false)
+        return SubItemViewHolder(view)
     }
 
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int = subItemList.size
 }

@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model
+package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.holder
+
+import android.support.v7.widget.AppCompatImageView
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
 
 /**
  * Created by jcuentas on 20/09/17.
  */
-data class Item(val itemId: Int, val subItemList: List<SubItem>) {
+class SubItemViewHolder : RecyclerView.ViewHolder {
 
+    val iviImage: AppCompatImageView
+
+    constructor(itemView: View) : super(itemView) {
+        iviImage = itemView.findViewById(R.id.iviImage)
+    }
 }

@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.SubItem
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -39,7 +40,11 @@ class MainActivity : AppCompatActivity() {
         rviContainer.adapter = itemAdapter
 
         val itemList = ArrayList<Item>()
-        (0..10).mapTo(itemList) { Item(it, emptyList()) }
+        (0..10).mapTo(itemList) {
+            val subItemList = ArrayList<SubItem>()
+            (0..4).mapTo(subItemList) { SubItem(it, "") }
+            Item(it, subItemList)
+        }
 
         itemAdapter.itemList = itemList
         itemAdapter.notifyDataSetChanged()
