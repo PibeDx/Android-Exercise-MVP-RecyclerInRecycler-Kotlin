@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.SubItem
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.holder.SubItemViewHolder
+import com.squareup.picasso.Picasso
 
 /**
  * Created by jcuentas on 20/09/17.
@@ -30,7 +31,13 @@ class SubItemAdapter: RecyclerView.Adapter<SubItemViewHolder>() {
 
     var subItemList = ArrayList<SubItem>()
 
-    override fun onBindViewHolder(holder: SubItemViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: SubItemViewHolder, position: Int) {
+        val subItem = subItemList.get(position)
+        Picasso.with(holder.iviImage.context)
+                .load(subItem.path)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder_error)
+                .into(holder.iviImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubItemViewHolder {

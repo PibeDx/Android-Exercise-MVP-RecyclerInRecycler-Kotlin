@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
-import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.SubItem
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,34 +33,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        setup()
+
+
+        itemAdapter.itemList = MainDummy.getItems() as ArrayList<Item>
+        itemAdapter.notifyDataSetChanged()
+    }
+
+    private fun setup() {
+        setupRecycler()
+    }
+
+    private fun setupRecycler() {
         rviContainer.layoutManager = LinearLayoutManager(this)
         rviContainer.setHasFixedSize(false)
-
         rviContainer.adapter = itemAdapter
-
-        val itemList = ArrayList<Item>()
-        (0..10).mapTo(itemList) {
-            val subItemList = ArrayList<SubItem>()
-            (0..4).mapTo(subItemList) { SubItem(it, "") }
-            Item(it, subItemList)
-        }
-
-        itemAdapter.itemList = itemList
-        itemAdapter.notifyDataSetChanged()
-
-        /*object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-            override fun getItemCount(): Int = 30
-
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                (holder.itemView as TextView).text = position.toString()
-            }
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
-                return object : RecyclerView.ViewHolder(view) {}
-            }
-
-        }*/
     }
+
+
 }

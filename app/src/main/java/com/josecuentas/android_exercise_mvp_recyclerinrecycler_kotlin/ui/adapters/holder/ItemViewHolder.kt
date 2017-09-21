@@ -44,9 +44,9 @@ class ItemViewHolder : RecyclerView.ViewHolder {
             rviItem.setHasFixedSize(true)
             rviItem.adapter = subItemAdapter
         } else {
-            //val subItemAdapter = rviItem.adapter as SubItemAdapter
-            //subItemAdapter.subItemList = subItemList as ArrayList<SubItem>
-            //subItemAdapter.notifyDataSetChanged()
+            val subItemAdapter = rviItem.adapter as SubItemAdapter
+            subItemAdapter.subItemList = subItemList as ArrayList<SubItem>
+            subItemAdapter.notifyDataSetChanged()
         }
     }
 }
