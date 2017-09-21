@@ -14,15 +14,30 @@
  * limitations under the License.
  */
 
-package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model
+package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.main
 
-import java.io.Serializable
+import com.josecuentas.android_exercise_mvp_order_kotlin.ui.IPresenter
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
 
 /**
- * Created by jcuentas on 20/09/17.
+ * Created by jcuentas on 21/09/17.
  */
-data class Item(val itemId: Int, val subItemList: List<SubItem>) : Serializable{
-    companion object {
-        val BUNDLE_LIST = ".item_list"
+interface MainContract {
+
+    interface View {
+        fun showLoading()
+        fun hideLoading()
+        fun hideRefreshLoading()
+        fun loadItems(itemList : List<Item>)
     }
+
+    interface Listener {
+        fun loadPresenterState(itemList: List<Item>?)
+    }
+
+    interface Presenter : IPresenter<View> {
+        fun getItems()
+        fun refresh()
+    }
+
 }

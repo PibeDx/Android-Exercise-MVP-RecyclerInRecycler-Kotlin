@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model
-
-import java.io.Serializable
+package com.josecuentas.android_exercise_mvp_order_kotlin.ui
 
 /**
- * Created by jcuentas on 20/09/17.
+ * Created by jcuentas on 21/09/17.
  */
-data class SubItem(val subItemId: Int, val path: String) : Serializable {
+interface IPresenter<View> {
+    fun attached(view: View)
+    fun detached()
+    fun destroyed()
 }

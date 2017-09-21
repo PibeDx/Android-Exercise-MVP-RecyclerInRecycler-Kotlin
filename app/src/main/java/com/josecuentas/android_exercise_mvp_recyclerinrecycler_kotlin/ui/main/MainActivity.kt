@@ -19,25 +19,37 @@ package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.main
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
 
     val itemAdapter = ItemAdapter()
+    val presenter: MainPresenter by lazy { MainPresenter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        injectPresenter()
+        events()
         setup()
+    }
 
+    private fun events() {
+        sreLayout.setOnRefreshListener { presenter.refresh() }
+    }
 
-        itemAdapter.itemList = MainDummy.getItems() as ArrayList<Item>
-        itemAdapter.notifyDataSetChanged()
+    override fun onResume() {
+        super.onResume()
+        presenter.getItems()
+    }
+
+    private fun injectPresenter() {
+        presenter.attached(this)
     }
 
     private fun setup() {
@@ -50,5 +62,47 @@ class MainActivity : AppCompatActivity() {
         rviContainer.adapter = itemAdapter
     }
 
+    override fun showLoading() {
+        pbaLoading.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        pbaLoading.visibility = View.GONE
+    }
+
+    override fun hideRefreshLoading() {
+        sreLayout.isRefreshing = false
+    }
+
+    override fun loadItems(itemList: List<Item>) {
+        itemAdapter.itemList = itemList as ArrayList<Item>
+        itemAdapter.notifyDataSetChanged()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            restoreState(savedInstanceState)
+        }
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        saveState(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun restoreState(savedInstanceState: Bundle) {
+        val itemList: List<Item> = savedInstanceState.getSerializable(Item.BUNDLE_LIST) as List<Item>
+        presenter.loadPresenterState(itemList)
+    }
+
+    private fun saveState(outState: Bundle?) {
+        outState?.putSerializable(Item.BUNDLE_LIST, presenter.itemList as ArrayList)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.destroyed()
+    }
 
 }
