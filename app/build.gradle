@@ -37,6 +37,7 @@ dependencies {
     implementation ('com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar') {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     testImplementation 'junit:junit:4.12'
 
