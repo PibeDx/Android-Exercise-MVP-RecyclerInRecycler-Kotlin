@@ -16,7 +16,9 @@
 
 package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.main
 
+import android.os.Handler
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Pagination
 
 /**
  * Created by jcuentas on 21/09/17.
@@ -25,6 +27,7 @@ class MainPresenter : MainContract.Presenter, MainContract.Listener {
 
     private var view: MainContract.View? = null
     val itemList: MutableList<Item> = ArrayList()
+    var pagination = Pagination()
 
     override fun attached(view: MainContract.View) {
         this.view = view
@@ -39,26 +42,41 @@ class MainPresenter : MainContract.Presenter, MainContract.Listener {
     }
 
     override fun getItems() {
-        this.view?.showLoading()
-        if (this.itemList.isEmpty()) {
-            itemList.addAll(MainDummy.getItems())
+        if (pagination.isEnd()) {
+            this.view?.loadItems(itemList)
+            this.view?.hideLoading()
+            return
         }
-        this.view?.loadItems(itemList)
-        this.view?.hideLoading()
+
+        this.view?.showLoading()
+        //simulation service
+        Handler().postDelayed({
+            val nextPage = pagination.getNextPage()
+            if (pagination.currentPage <= pagination.lastPage)
+                itemList.addAll(MainDummy.getItems())
+
+            this.view?.loadItems(itemList)
+            this.view?.hideLoading()
+        }, 400)
     }
 
     override fun refresh() {
-        this.itemList.clear()
+        this.reset()
+        val nextPage = pagination.getNextPage()
         this.itemList.addAll(MainDummy.getItems())
-
         this.view?.loadItems(itemList)
-
         this.view?.hideRefreshLoading()
     }
 
-    override fun loadPresenterState(itemList: List<Item>?) {
+    private fun reset() {
+        this.itemList.clear()
+        this.pagination.reset()
+    }
+
+    override fun loadPresenterState(itemList: List<Item>?, pagination: Pagination) {
         if (itemList != null) {
             this.itemList.addAll(itemList)
         }
+        this.pagination = pagination
     }
 }

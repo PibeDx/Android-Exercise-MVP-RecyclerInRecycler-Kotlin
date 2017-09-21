@@ -22,13 +22,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.R
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Pagination
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
-    val itemAdapter = ItemAdapter()
+    val itemAdapter by lazy { ItemAdapter() }
     val presenter: MainPresenter by lazy { MainPresenter() }
+    lateinit var listenerPagination: PaginationScrollListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +43,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun events() {
         sreLayout.setOnRefreshListener { presenter.refresh() }
+        listenerPagination = object : PaginationScrollListener() {
+            override fun loadMoreItems(currentPage: Int) {
+                presenter.getItems()
+            }
+        }
+        rviContainer.addOnScrollListener(listenerPagination)
     }
 
     override fun onResume() {
@@ -68,6 +76,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun hideLoading() {
         pbaLoading.visibility = View.GONE
+        listenerPagination.setLoading(false)
     }
 
     override fun hideRefreshLoading() {
@@ -93,11 +102,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun restoreState(savedInstanceState: Bundle) {
         val itemList: List<Item> = savedInstanceState.getSerializable(Item.BUNDLE_LIST) as List<Item>
-        presenter.loadPresenterState(itemList)
+        val pagination = savedInstanceState.getSerializable(Pagination.BUNDLE) as Pagination
+        presenter.loadPresenterState(itemList, pagination)
+        //restore adapter
+        itemAdapter.itemList = itemList as ArrayList<Item>
+        itemAdapter.notifyDataSetChanged()
     }
 
     private fun saveState(outState: Bundle?) {
         outState?.putSerializable(Item.BUNDLE_LIST, presenter.itemList as ArrayList)
+        outState?.putSerializable(Pagination.BUNDLE, presenter.pagination)
     }
 
     override fun onDestroy() {

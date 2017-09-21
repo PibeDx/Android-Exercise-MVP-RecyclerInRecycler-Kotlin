@@ -18,6 +18,7 @@ package com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.ui.main
 
 import com.josecuentas.android_exercise_mvp_order_kotlin.ui.IPresenter
 import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Item
+import com.josecuentas.android_exercise_mvp_recyclerinrecycler_kotlin.domain.model.Pagination
 
 /**
  * Created by jcuentas on 21/09/17.
@@ -28,11 +29,11 @@ interface MainContract {
         fun showLoading()
         fun hideLoading()
         fun hideRefreshLoading()
-        fun loadItems(itemList : List<Item>)
+        fun loadItems(itemList: List<Item>)
     }
 
     interface Listener {
-        fun loadPresenterState(itemList: List<Item>?)
+        fun loadPresenterState(itemList: List<Item>?, pagination: Pagination)
     }
 
     interface Presenter : IPresenter<View> {
