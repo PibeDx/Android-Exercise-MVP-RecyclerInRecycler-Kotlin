@@ -20,7 +20,9 @@
 <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rviItem"
     android:layout_width="match_parent"
     android:layout_height="180dp"
+    app:rvp_singlePageFling="true"
     />
