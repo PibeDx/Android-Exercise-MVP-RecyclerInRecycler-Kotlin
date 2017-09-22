@@ -43,7 +43,7 @@ class MainPresenter : MainContract.Presenter, MainContract.Listener {
 
     override fun getItems() {
         if (pagination.isEnd()) {
-            this.view?.loadItems(itemList)
+            //this.view?.loadItems(itemList)
             this.view?.hideLoading()
             return
         }
