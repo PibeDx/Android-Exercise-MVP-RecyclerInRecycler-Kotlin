@@ -5,7 +5,8 @@
 ### Design preview:
 
 <img src="https://raw.githubusercontent.com/PibeDx/Android-Exercise-MVP-RecyclerInRecycler-Kotlin/master/art/device-2017-09-22-103940.png" width="360">
-<img src="https://raw.githubusercontent.com/PibeDx/Android-Exercise-MVP-RecyclerInRecycler-Kotlin/master/art/device-2017-09-22-105916.png" width="360">
+<img src="https://raw.githubusercontent.com/PibeDx/Android-Exercise-MVP-RecyclerInRecycler-Kotlin/master/art/device-2017-09-22-111344.png" width="360">
+<img src="https://raw.githubusercontent.com/PibeDx/Android-Exercise-MVP-RecyclerInRecycler-Kotlin/master/art/device-2017-09-22-111419.png" width="360">
 
 ### Pagination:
 
